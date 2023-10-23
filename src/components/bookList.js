@@ -5,6 +5,7 @@ import './bookList.css';
 import {FiEdit} from 'react-icons/fi';
 import { FcSearch } from "react-icons/fc";
 import { GrNext,GrPrevious } from "react-icons/gr";
+import { MdLastPage,MdFirstPage } from "react-icons/md";
 import {AiOutlineSortDescending,AiOutlineSortAscending} from 'react-icons/ai';
 import BookForm from "./bookForm";
 
@@ -73,11 +74,13 @@ const BookList = () => {
                             )
                         })}
                     </tbody>
-                    <tfoot className="pagination">
-                        {page<=1?<></>:<GrPrevious className="page-button" onClick={(e)=>setPage(page-1)}/>}Page:{page}{page<=(total%25)?
-                        <GrNext className="page-button" onClick={(e)=>setPage(page+1)}/>:<></>}
-                    </tfoot>
                 </table>
+                <center className="pagination">
+                    <MdFirstPage className="page-button-ff" onClick={(e)=>setPage(1)}/>
+                    {page<=1?<></>:<GrPrevious className="page-button" onClick={(e)=>setPage(page-1)}/>}Page:{page}{page<=(Math.ceil(total/25))?
+                    <GrNext className="page-button" onClick={(e)=>setPage(page+1)}/>:<></>}
+                    <MdLastPage className="page-button-ff" onClick={(e)=>setPage(Math.ceil(total/25))}/>
+                </center>
             </div>
         </center>
     )
