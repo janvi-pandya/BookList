@@ -70,6 +70,21 @@
     transform: scale(2.5);
     cursor: pointer;
 }
+.pagination{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    margin-left: 50%;
+    color: antiquewhite;
+    background-color: black;
+    opacity: 0.5;
+    width: 100%;
+}
+.page-button{
+    color: antiquewhite;
+    background-color: #ddd;
+    transform: scale(1);
+    opacity: 1;
+}
 @media only screen and (max-width: 600px) {
     .outside {
       width: auto;

@@ -4,6 +4,7 @@ import axios from "axios";
 import './bookList.css';
 import {FiEdit} from 'react-icons/fi';
 import { FcSearch } from "react-icons/fc";
+import { GrNext,GrPrevious } from "react-icons/gr";
 import {AiOutlineSortDescending,AiOutlineSortAscending} from 'react-icons/ai';
 import BookForm from "./bookForm";
 
@@ -13,16 +14,19 @@ const client = axios.create({
 
 const BookList = () => {
     const [search,setSearch] = useState(''); 
+    const [total,setTotal] = useState(0);
+    const [page,setPage] = useState(1);
     const [sort,setSort] = useState('ASC');   
     const [searchClick,setSearchClick] = useState(false);    
     const [posts, setPosts] = useState([]);
     const [isEdit,setEdit] = useState([-1,false]);
 
     useEffect(() => {
-    client.get(search!==''?`?title=${search}&DIR=${sort}`:`?DIR=${sort}`).then((response) => {
+    client.get(search!==''?`?title=${search}&DIR=${sort}&page=${page}`:`?DIR=${sort}&page=${page}`).then((response) => {
+        setTotal(response.data.pagination.totalElements);
         setPosts(response.data.data);
     });
-    }, [searchClick,sort]);
+    }, [searchClick,sort,page]);
     const handleEdit=(event,index)=>{
         setEdit([index,true]);
     }
@@ -69,6 +73,10 @@ const BookList = () => {
                             )
                         })}
                     </tbody>
+                    <tfoot className="pagination">
+                        {page<=1?<></>:<GrPrevious className="page-button" onClick={(e)=>setPage(page-1)}/>}Page:{page}{page<=(total%25)?
+                        <GrNext className="page-button" onClick={(e)=>setPage(page+1)}/>:<></>}
+                    </tfoot>
                 </table>
             </div>
         </center>
